@@ -125,7 +125,8 @@ def _convert_formatting(content, max_length, nesting):
     # Block spoilers stripped from preview
     block_spoilers = content.find_all('div', {'class': 'spoiler_container'})
     for spoiler in block_spoilers:
-        spoiler.clear()
+        spoilertitle = spoiler.find('button', {'class': 'spoileron'}).get_text()
+        spoiler.replace_with(f"**[{spoilertitle}]**\n")
 
     def rec_truncate(node, deficit):
         # Recursive function to truncate *non-quoted* text.
